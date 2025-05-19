@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: org.hbr
+testFramework: spock
+sourceLanguage: java
+buildTool: gradle
+features: [annotation-api, app-name, gradle, groovy-datetime, groovy-dateutil, groovy-json, groovy-xml, groovy-yaml, http-client, jackson-databind, jackson-xml, java, java-application, logback, lombok, management, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, openapi, problem-json, reactor, reactor-http-client, readme, rss, serialization-jackson, shade, spock, static-resources, swagger-ui, validation, yaml, yaml-build]
