@@ -5,6 +5,8 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,8 +39,9 @@ public class FeedReaderController {
     @ApiResponse(responseCode = "400", description = "Bad Request")
     @ApiResponse(responseCode = "404", description = "Not Found")
     @Tag(name = "Feed")
+    @ExecuteOn(TaskExecutors.IO)
     @Get(uri = "/", produces = MediaType.APPLICATION_JSON)
-    Mono<HttpResponse<Feed>> get() {
+    Feed get() {
         return feedReaderClient.getFeed();
     }
 
@@ -58,8 +61,9 @@ public class FeedReaderController {
     @ApiResponse(responseCode = "400", description = "Bad Request")
     @ApiResponse(responseCode = "404", description = "Not Found")
     @Tag(name = "Feed")
+    @ExecuteOn(TaskExecutors.IO)
     @Get(uri = "/xml", produces = MediaType.APPLICATION_XML)
-    Mono<HttpResponse<Feed>> getXml() {
+    Feed getXml() {
         return feedReaderClient.getFeed();
     }
 }

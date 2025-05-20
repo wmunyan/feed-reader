@@ -5,5 +5,5 @@ import org.hbr.model.Feed;
 import reactor.core.publisher.Mono;
 
 public interface IFeedReader {
-    Mono<HttpResponse<Feed>> getFeed();
+    Feed getFeed();
 }

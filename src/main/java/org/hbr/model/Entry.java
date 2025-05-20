@@ -2,23 +2,31 @@ package org.hbr.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
+@JsonPropertyOrder({
+    "title", "id", "links", "updated", "published", "summary", "authors", "seriesLabel",
+    "featureImageUri", "featureImageTitle", "categories", "content"
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Introspected
-class Entry {
+@Serdeable
+class Entry implements Serializable {
     String title;
 
     String id;

@@ -9,5 +9,5 @@ import reactor.core.publisher.Mono;
 @Client(id = "hbr")
 public interface FeedReaderClient {
     @Get("/resources/xml/atom/latest-hbr.xml")
-    Mono<HttpResponse<Feed>> getFeed();
+    Feed getFeed();
 }
