@@ -10,20 +10,22 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.serde.config.naming.KebabCaseStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-    "title", "id", "href", "updated", "published", "summary", "styles", "authors", "seriesLabel",
-    "featureImageUri", "featureImageTitle", "categories", "content"
+    "title", "id", "href", "contentType", "subjects", "updated", "published", "summary", "styles",
+    "authors", "seriesLabel", "featureImageUri", "featureImageTitle", "content"
 })
-@JsonIgnoreProperties({"links"})
+@JsonIgnoreProperties({"links", "categories"})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,6 +33,8 @@ import java.util.Objects;
 @Introspected
 @Serdeable
 class Entry implements Serializable {
+    @JacksonXmlProperty(localName = "title")
+    @JsonProperty("t")
     String title;
 
     String id;
@@ -45,6 +49,32 @@ class Entry implements Serializable {
             return null;
         }
         return links.get(0).getHref();
+    }
+
+    @JsonProperty("contentType")
+    String getContentType() {
+        if (Objects.isNull(categories) || categories.isEmpty()) {
+            return "";
+        }
+        for (int i = 0; i < categories.size(); i++) {
+            Category c = categories.get(i);
+            System.out.println(c.scheme);
+            if (c.scheme.contentEquals("http://hbr.org/categorization/contentType")) {
+                return c.label;
+            }
+        }
+        return null;
+    }
+
+    @JsonProperty("subjects")
+    List<String> getSubjects() {
+        if (Objects.isNull(categories) || categories.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return categories.stream()
+            .filter(c -> c.scheme.equals("http://hbr.org/categorization/hbp-subject"))
+            .map(Category::getLabel)
+            .toList();
     }
 
     String updated;

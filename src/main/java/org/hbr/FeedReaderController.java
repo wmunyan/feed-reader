@@ -1,7 +1,6 @@
 package org.hbr;
 
 
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -15,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import org.hbr.client.FeedReaderClient;
 import org.hbr.model.Feed;
-import reactor.core.publisher.Mono;
 
 @Controller("/feed-reader")
 public class FeedReaderController {
@@ -40,8 +38,8 @@ public class FeedReaderController {
     @ApiResponse(responseCode = "404", description = "Not Found")
     @Tag(name = "Feed")
     @ExecuteOn(TaskExecutors.IO)
-    @Get(uri = "/", produces = MediaType.APPLICATION_JSON)
-    Feed get() {
+    @Get(produces = MediaType.APPLICATION_JSON)
+    Feed foo() {
         return feedReaderClient.getFeed();
     }
 
@@ -63,7 +61,7 @@ public class FeedReaderController {
     @Tag(name = "Feed")
     @ExecuteOn(TaskExecutors.IO)
     @Get(uri = "/xml", produces = MediaType.APPLICATION_XML)
-    Feed getXml() {
+    Feed bar() {
         return feedReaderClient.getFeed();
     }
 }
