@@ -15,7 +15,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.List;
 
-@JsonPropertyOrder(value = { "id", "title", "links", "updated", "number-of-entries", "entries" })
+@JsonPropertyOrder(value = { "id", "title", "updated", "number-of-entries", "entries" })
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,9 +32,9 @@ public class Feed implements Serializable {
     @JsonProperty("id")
     String id;
 
-    @JacksonXmlProperty(localName = "link")
-    @JacksonXmlElementWrapper(useWrapping = false, localName = "link")
-    List<Link> links;
+//    @JacksonXmlProperty(localName = "link")
+//    @JacksonXmlElementWrapper(useWrapping = false, localName = "link")
+//    List<Link> links;
 
     @JacksonXmlProperty(localName = "updated")
     @JsonProperty("updated")

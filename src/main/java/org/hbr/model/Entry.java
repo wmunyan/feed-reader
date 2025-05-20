@@ -1,5 +1,7 @@
 package org.hbr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -15,11 +17,13 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @JsonPropertyOrder({
-    "title", "id", "links", "updated", "published", "summary", "authors", "seriesLabel",
+    "title", "id", "href", "updated", "published", "summary", "styles", "authors", "seriesLabel",
     "featureImageUri", "featureImageTitle", "categories", "content"
 })
+@JsonIgnoreProperties({"links"})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,12 +39,23 @@ class Entry implements Serializable {
     @JacksonXmlElementWrapper(useWrapping = false, localName = "link")
     List<Link> links;
 
+    @JsonProperty("href")
+    String getHref() {
+        if (Objects.isNull(links) || links.isEmpty()) {
+            return null;
+        }
+        return links.get(0).getHref();
+    }
+
     String updated;
 
     String published;
 
     @JacksonXmlCData
     String summary;
+
+    @JacksonXmlCData
+    String styles;
 
     @JacksonXmlProperty(localName = "author")
     @JacksonXmlElementWrapper(useWrapping = false, localName = "author")
